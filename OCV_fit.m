@@ -23,9 +23,10 @@ y_discharing = flip(y_discharging);
 
 % averaging
 x = x_charging;
-y = (y_charging + flip(y_discharging)) / 2;
 
-number_of_terms = 6;
+% y = (y_charging + flip(y_discharging)) / 2;
+y = y_charging;
+number_of_terms = 4;
 
 A = zeros(number_of_terms, number_of_terms);
 b = zeros(number_of_terms, 1);
@@ -34,9 +35,9 @@ b = zeros(number_of_terms, 1);
 % plotting stress-strain diagram
 figure(1)
 hold on
-plot(x_charging, y_charging, '-o', 'MarkerFaceColor', 'g', 'linewidth', 1, 'color', 'g');
-plot(x_discharging, y_discharging, '-o', 'MarkerFaceColor', 'r', 'linewidth', 1, 'color', 'r');
-plot(x, y, '-o', 'MarkerFaceColor', 'b', 'linewidth', 1, 'color', 'b');
+plot(x_charging, y_charging, 'MarkerFaceColor', 'g', 'linewidth', 3, 'color', 'g');
+plot(x_discharging, y_discharging, 'MarkerFaceColor', 'r', 'linewidth', 3, 'color', 'r');
+plot(x, y, 'MarkerFaceColor', 'b', 'linewidth', 3, 'color', 'b');
 grid
 
 title('OCV vs. SOC')
@@ -46,7 +47,7 @@ legend('charging', 'discharging', 'averaged');
 set(gca, 'fontsiz', 16)
 
 figure(2)
-plot(times, voltages, '-o', 'MarkerFaceColor', 'b', 'linewidth', 1, 'color', 'b');
+plot(times, voltages, 'MarkerFaceColor', 'b', 'linewidth', 3, 'color', 'b');
 xlabel('time (sec)');
 ylabel('voltage (V)');
 hold on
@@ -74,8 +75,8 @@ Y = polyval(z, Sample_Domain);
 % plotting OCV curve
 figure(3)
 hold on
-plot(x, y, '-o', 'MarkerFaceColor', 'r', 'linewidth', 2, 'color', 'r')
-plot(Sample_Domain, Y, '--', 'linewidth', 2, 'color', [0 0 0])
+plot(x, y, 'MarkerFaceColor', 'r', 'linewidth', 3, 'color', 'r')
+plot(Sample_Domain, Y, '--', 'linewidth', 3, 'color', [0 0 0])
 grid
 
 legend('data', 'polynomial of best fit', 'Location', 'southeast')

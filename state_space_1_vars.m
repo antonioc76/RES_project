@@ -4,35 +4,54 @@ R1 = .005;
 C = 500;
 Q = 3600;
 
+% polynomail OCV linearization from homework
+p_0 = 3.4707;
+p_1 = 1.6112;
+p_2 = -2.6287; 
+p_3 = 1.7175;
+
+% from project OCV(SOC) fit
+p_0_2 = 3.64021760674922;
+p_1_2 = 0.168800688918405;
+p_2_2 = 0.951263116462285;
+p_3_2 = -0.547527330994019;
+
+% linearization test
+z_vec = linspace(0, 1, 100);
+ocv_nl = p_0 + p_1 * z_vec + p_2 * z_vec.^2 + p_3 * z_vec.^3;
+ocv_nl_2 = p_0_2 + p_1_2 * z_vec + p_2_2 * z_vec.^2 + p_3_2 * z_vec.^3;
+y_eq = (p_0 + .5 * p_1 + .25 * p_2 + .125 * p_3);
+dy_dz_mult = (p_1 + p_2 + 3/4 * p_3) * -0.5;
+ocv_lin = (p_1 + p_2 + 3/4 * p_3) .* z_vec + y_eq + dy_dz_mult;
+
+plot(z_vec, ocv_nl, 'DisplayName', 'nl homework');
+hold on
+%plot(z_vec, ocv_nl_2, 'DisplayName', 'nl curve fit');
+%hold on
+plot(z_vec, ocv_lin, 'DisplayName', 'lin');
+legend;
+
 A_mat = [0, 0; 0, - 1 / (C*R1)];
 
 B_mat = [1/Q; 1/C];
 
-C_dummy = eye(2);
+C_mat = [1, 0; 0, 1; p_1 + p_2 + 3*p_3 / 4, 0];
 
-D_dummy = [0;0];
+D_dummy = [0; 0; 0];
+
+%C_mat = eye(2);
+
+%D_dummy = [0;0];
 
 % initial conditions
 z0 = 0.5;
 V_c0 = 0;
 x0 = [z0, V_c0]; 
 
-% polynomail OCV linearization from homework
-%p_0 = 3.4707;
-%p_1 = 1.6112;
-%p_2 = -2.6287; 
-%p_3 = 1.7175;
-
-% from project OCV(SOC) fit
-%p_0 = 3.34848817924483;
-%p_1 = 1.39726966353313;
-%p_2 = -2.39845826415182;
-%p_3 = 1.67743028643280;
-
 % 5th order poly
-p_5 = 20.9865358625928;
-p_4 = -52.9516197704481;
-p_3 = 48.7434451832868;
-p_2 = -19.7495647885364;
-p_1 = 3.74878321288425;
-p_0 = 3.28229043218463;
+%p_5 = 20.9865358625928;
+%p_4 = -52.9516197704481;
+%p_3 = 48.7434451832868;
+%p_2 = -19.7495647885364;
+%p_1 = 3.74878321288425;
+%p_0 = 3.28229043218463;
