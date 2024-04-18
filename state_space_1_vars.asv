@@ -24,11 +24,11 @@ y_eq = (p_0 + .5 * p_1 + .25 * p_2 + .125 * p_3);
 dy_dz_mult = (p_1 + p_2 + 3/4 * p_3) * -0.5;
 ocv_lin = (p_1 + p_2 + 3/4 * p_3) .* z_vec + y_eq + dy_dz_mult;
 
-plot(z_vec, ocv_nl, 'DisplayName', 'nonlinear OCV');
+plot(z_vec, ocv_nl, 'DisplayName', 'nl homework');
 hold on
 %plot(z_vec, ocv_nl_2, 'DisplayName', 'nl curve fit');
 %hold on
-plot(z_vec, ocv_lin, 'DisplayName', 'linear OCV');
+plot(z_vec, ocv_lin, 'DisplayName', 'lin');
 legend;
 
 A_mat = [0, 0; 0, - 1 / (C*R1)];
@@ -46,7 +46,7 @@ D_dummy = [0; 0; 0; R0];
 %D_dummy = [0;0];
 
 % initial conditions
-z0 = 0;
+z0 = 0.5;
 V_c0 = 0;
 x0 = [z0, V_c0]; 
 
